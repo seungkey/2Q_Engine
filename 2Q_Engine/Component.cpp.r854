@@ -1,0 +1,17 @@
+#include "pch.h"
+#include "Component.h"
+
+Component::Component(GameObject* pOwner, string Name)
+	: m_pOwner(pOwner)
+	, m_name(Name)
+{
+}
+
+Component::Component(GameObject* pOwner, string name)
+	:m_name(name),m_pOwner(pOwner)
+{
+}
+
+Component::~Component()
+{
+}
