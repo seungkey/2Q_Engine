@@ -29,7 +29,11 @@ public:
 	void SetMass(float mass) { m_mass = mass; }
 	float GetMass() { return m_mass; }
 
+	void SetXVelocity(float x) { m_velocity.x = x; }
+	void SetYVelocity(float y) { m_velocity.y = y; }
+
 	void SetVelocity(Vector2D velocity) { m_velocity = velocity; }
+	Vector2D GetVelocity() { return m_velocity; }
 	void AddVelocity(Vector2D velocity) { m_velocity += velocity; }
 
 };

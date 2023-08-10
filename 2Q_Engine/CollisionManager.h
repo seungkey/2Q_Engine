@@ -12,6 +12,8 @@ private:
 
 	BoxCollider* m_playerBox;
 	vector<BoxCollider*> m_otherBoxes;
+	
+
 
 public:
 	CollisionManager();

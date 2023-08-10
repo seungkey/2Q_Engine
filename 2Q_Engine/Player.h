@@ -21,6 +21,8 @@ public:
     virtual bool Initialize() override;
     virtual void Update(float dt)override;
 
+    Vector2D ModificationVector(Collider& other);
+
     virtual void OnCollisionEnter(Collider& other)override;
     virtual void OnCollisionStay(Collider& other)override;
     virtual void OnCollisionExit(Collider& other)override;

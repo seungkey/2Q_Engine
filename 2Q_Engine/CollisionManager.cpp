@@ -20,11 +20,15 @@ CollisionManager::~CollisionManager()
 {
 	delete aabb;
 	delete obb;
+	
 }
 
 void CollisionManager::BoxCollision(BoxCollider& player, BoxCollider& other)
 {
+	
 	bool bIsCollision = false;
+	bool otherCollision = other.GetCollision();
+
 	if (player.GetColliderType() == ColliderType::OBB || other.GetColliderType() == ColliderType::OBB)
 	{
 		if (obb->Intersect(player, other))
@@ -47,35 +51,42 @@ void CollisionManager::BoxCollision(BoxCollider& player, BoxCollider& other)
 			bIsCollision = false;
 		}
 	}
+
 	if (bIsCollision)
 	{
-		if (player.GetCollision())
+		
+		if (otherCollision)
 		{
 			player.GetOwner()->OnCollisionStay(other);
 			other.GetOwner()->OnCollisionStay(player);
-			player.GetOwner()->GetRootComponent()->AddRelativeTranslation(aabb->GetDifference());
-			if (aabb->GetDifference().x == 0) {
-				player.GetOwner()->GetComponent<RigidBody>("RigidBody")->SetGravity(0);
-				
-			}
+			return;
 		}
 		else
 		{
-			player.GetOwner()->GetComponent<RigidBody>("RigidBody")->SetVelocity(Vector2D(0, 0));
-			player.GetOwner()->OnCollisionEnter(other);
-			other.GetOwner()->OnCollisionEnter(player);
-			player.SetCollision(bIsCollision);
-			other.SetCollision(bIsCollision);
+			if (player.GetCollision())
+			{
+				player.GetOwner()->OnCollisionStay(other);
+				other.SetCollision(bIsCollision);
+				
+				return;
+			}
+			else
+			{
+				player.GetOwner()->OnCollisionEnter(other);
+				other.GetOwner()->OnCollisionEnter(player);
+				player.SetCollision(bIsCollision);
+				return;
+			}
 		}
 	}
 	else
 	{
-		if (player.GetCollision()&&other.GetCollision())
+		if (otherCollision)
 		{
-			player.GetOwner()->OnCollisionExit(other);
-			other.GetOwner()->OnCollisionExit(player); 
 			player.SetCollision(bIsCollision);
+			player.GetOwner()->OnCollisionExit(other);
 		}
+			//player.GetOwner()->OnCollisionExit(other);
 			other.SetCollision(bIsCollision);
 	}
 }
@@ -90,6 +101,7 @@ void CollisionManager::Update()
 
 void CollisionManager::AddCollider(BoxCollider* boxCollider)
 {
+	
 	m_otherBoxes.push_back(boxCollider);
 }
 

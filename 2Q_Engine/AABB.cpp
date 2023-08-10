@@ -19,18 +19,7 @@ bool AABB::Intersect(BoxCollider& a, BoxCollider& b)
 		}
 		else 
 		{
-			if (aMax.y >= bMin.y && aMax.y <= b.GetCenterPos().y)
-			{
-				m_difference.y = -aMax.y + bMin.y;
-			}
-			else if(aMax.x>=bMin.x&&aMax.x<=b.GetCenterPos().x)
-			{
-				m_difference.x = -aMax.x + bMin.x;
-			}
-			else if (aMin.x <= bMax.x && aMin.x >= b.GetCenterPos().x)
-			{
-				m_difference.x = -aMin.x + bMax.x;
-			}
+			
 			return true;
 		}
 	}

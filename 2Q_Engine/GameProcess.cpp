@@ -68,10 +68,10 @@ HRESULT GameProcess::Initialize(HINSTANCE hInstance)
 	m_player->Initialize();
 	collisionManger->SetPlayerCollider(m_player->m_boxCollider);
 
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		m_ground.push_back(m_pWorld->CreateGameObject<Ground>());
-		m_ground[i]->SetCollider(Vector2D(32+(64*i), 700-(64*(i/2))), Vector2D(32, 32));
+		m_ground[i]->SetCollider(Vector2D(200*i, 500-(64*i)), Vector2D(100, 50));
 		collisionManger->AddCollider(m_ground[i]->GetCollider());
 	}
 
@@ -110,9 +110,9 @@ void GameProcess::GameLoop()
 
 void GameProcess::Update(float dt)
 {
-	m_pInput->Update();
 	while (time->m_elapsedTime >= 0.015)
 	{
+		m_pInput->Update();
 		time->m_elapsedTime -= 0.015;
 		collisionManger->Update();
 		m_pWorld->Update(0.015);

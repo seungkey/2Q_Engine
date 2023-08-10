@@ -51,6 +51,9 @@ public:
 	
 	CollisionType GetCollisionType() { return m_collisionType; }
 	void SetCollisionType(CollisionType collisionType) { m_collisionType = collisionType; }
+
+	Vector2D GetMinColliderVector() { return m_centerPos - m_extends; }
+	Vector2D GetMaxColliderVector() { return m_centerPos + m_extends; }
 	
 };
 
